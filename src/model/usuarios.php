@@ -6,26 +6,27 @@ function getUsuario($id = null)
   require_once("db.php");
   require_once("../functions.php");
 
-  try {
-    $sql = "SELECT p.id personaId, concat(p.nombre, ' ', p.apellido) nombre,
-       p.correo, r.id rolId, r.nombre rol
-      from personas p
-      inner join roles r on p.rol_id = r.id
-      where p.id = ?";
+  $sql = "SELECT persona_id
+      from usuarios u
+      where u.persona_id = ?";
+ 
+  $res = fetchOne($sql, [$id]);
+  answer_json($res);
+}
 
-    $sth = $pdo->prepare($sql);
-    $sth->execute([$id]);
-
-    if ($userRes = $sth->fetch(PDO::FETCH_ASSOC)) {
-            answer_json($userRes);
-        } else {
-            catchErrors("La persona no existe");
-        }
-  } catch (PDOException $e) {
-    catchErrors($e->getMessage());
-  }
+function createPersona($data = []){
+  require_once("db.php");
+  require_once("../functions.php");
+  $sql = "INSERT INTO personas(id, nombre, apellido, rol_id, correo)
+          VALUES (?, ?, ?, ?, ?)";
+  $res = insert($sql, $data);
+  answer_json($res);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  getPersona($_GET['id']);
+  getUsuario($_GET['id']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  // createPersona(file_get_contents("php://input"));
 }

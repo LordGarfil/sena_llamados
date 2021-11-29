@@ -23,7 +23,7 @@ function fetchOne($sql, $params)
         if ($userRes = $sth->fetch(PDO::FETCH_ASSOC)) {
             return $userRes;
         } else {
-            return catchErrors("La persona no existe");
+            return catchErrors("No encontrado");
         }
     } catch (PDOException $e) {
         return catchErrors($e->getMessage());

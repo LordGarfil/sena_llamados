@@ -30,5 +30,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-  createPersona(file_get_contents("php://input"));
+  // createPersona(file_get_contents("php://input"));
 }
