@@ -18,10 +18,12 @@ function login($data = null)
       $res = fetchOne($sql, [$user, $password]);
       answer_json($res);
     }else{
-      catchErrors("Debe enviar un usuario y contraseña");
+      $error = catchErrors("Debe enviar un usuario y contraseña");
+      answer_json($error);
     }
   }else{
-    catchErrors("Debe enviar un usuario y contraseña");
+    $error = catchErrors("Debe enviar un usuario y contraseña");
+    answer_json($error);
   }
 }
 
