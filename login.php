@@ -1,27 +1,3 @@
-<?php
-
-include "./db/db_handle.php";
-//Validación de campos vacios
-
-if ($_POST) {
-  if (
-    trim($_POST['user'])   === ''
-    || trim($_POST['password'])     === ''
-  ) {
-    echo "Debe llenar todos los campos";
-  } else {
-    $result = validate_user_existences($_POST);
-    if (!$result) {
-      echo "Usuario no existe";
-    } else {
-      echo "Usuario logueado correctamente";
-      header("location:index.php");
-    }
-  }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,20 +6,21 @@ if ($_POST) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles/login.css">
+  <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
-  <form action="login.php" method="POST">
+  <form>
     <h5>¡Bienvenido!</h5>
     <div class="login-form">
-      <input class="textfield" type="text" value="" placeholder="Usuario" name="user" autocomplete="false" autocapitalize="false">
+      <input class="textfield" type="text" value="" placeholder="Usuario" id="user" autocomplete=false autocapitalize="false">
       <br>
-      <input class="textfield" type="text" value="" placeholder="Contraseña" name="password" autocomplete="false" autocapitalize="false">
+      <input class="textfield" type="text" value="" placeholder="Contraseña" id="password" autocomplete=false autocapitalize="false">
       <br>
       <input class="button" type="submit" value="Iniciar sesión">
     </div>
   </form>
+  <script src="./src/controller/login.js"></script>
 </body>
 
 </html>

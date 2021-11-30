@@ -5,7 +5,7 @@ function connect()
   $host = "localhost";
   $user = "root";
   $password = "";
-  $dbName = "sena_llamados";
+  $dbName = "sena_llamado";
   $connection  = mysqli_connect($host, $user, $password, $dbName);
   mysqli_select_db($connection, $dbName);
   return $connection;
