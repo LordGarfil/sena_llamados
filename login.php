@@ -10,13 +10,11 @@
 </head>
 
 <body>
-  <form>
+  <form id="main-form">
     <h5>¡Bienvenido!</h5>
     <div class="login-form">
-      <input class="textfield" type="text" value="" placeholder="Usuario" id="user" autocomplete=false autocapitalize="false">
-      <br>
-      <input class="textfield" type="text" value="" placeholder="Contraseña" id="password" autocomplete=false autocapitalize="false">
-      <br>
+      <input class="textfield" type="text" placeholder="Usuario" name="user" autocomplete=false autocapitalize=false>
+      <input class="textfield" type="password" placeholder="Contraseña" name="password" autocomplete=false autocapitalize=false>
       <input class="button" type="submit" value="Iniciar sesión">
     </div>
   </form>
