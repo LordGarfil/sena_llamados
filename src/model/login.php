@@ -10,8 +10,9 @@ function login($data = null)
       $user = $data['user'];
       $password = $data['password'];
 
-      $sql = "SELECT u.persona_id, u.rol_id
+      $sql = "SELECT u.persona_id, u.rol_id, r.nombre rol
             from usuarios u
+            inner join roles r on u.rol_id = r.id
             where u.persona_id = ?
             and u.contrasena = ?";
 

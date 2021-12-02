@@ -1,13 +1,14 @@
     body {
         margin: 0;
         padding: 0;
-        background-color: #5D91F8;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
     #main-form {
         margin: 0;
         height: 100vh;
+                background-color: #5D91F8;
+
         width: 100vw;
         display: flex;
         flex-direction: column;
@@ -66,6 +67,7 @@
         font-weight: 300;
         border-radius: 27px;
         font-size: 24px;
+        cursor: pointer;
     }
     /* 
 

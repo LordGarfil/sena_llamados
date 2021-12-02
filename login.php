@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <form id="main-form">
+  <form id="main-form" class="app">
     <h5>¡Bienvenido!</h5>
     <div class="login-form">
       <input class="textfield" type="text" placeholder="Usuario" name="user" autocomplete=false autocapitalize=false>
@@ -18,7 +18,7 @@
       <input class="button" type="submit" value="Iniciar sesión">
     </div>
   </form>
-  <script src="./src/controller/login.js"></script>
+  <script src="./src/controller/login.js" type="module"></script>
 </body>
 
 </html>
