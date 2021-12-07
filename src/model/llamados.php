@@ -11,6 +11,7 @@ function getLlamadosEstudiante($personaId){
        concat(d.nombre, ' ', d.apellido) docente,
        l.observacion observaciones,
        c.nombre categoria,
+       c.color,
        l.fecha_creacion fecha
       FROM llamados l
       INNER JOIN personas p ON l.persona_id = p.id
