@@ -21,7 +21,20 @@ function login($data = null)
             and u.contrasena = ?";
 
       $res = fetchOne($sql, [$user, $password]);
+
+      if($res && !isset($res['error'])){
+        session_start();
+        $_SESSION['persona_id'] = $res['persona_id'];
+        $_SESSION['persona'] = $res['nombre'];
+        $_SESSION['correo'] = $res['correo'];
+        $_SESSION['rol_id'] = $res['rol_id'];
+        $_SESSION['rol'] = $res['rol'];
+        $_SESSION['ficha_id'] = $res['ficha_id'];
+        $_SESSION['ficha'] = $res['ficha'];
+      }
+
       answer_json($res);
+      
     }else{
       $error = catchErrors("Debe enviar un usuario y contraseña");
       answer_json($error);
