@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,14 +13,14 @@
 
 <body>
   <!-- Cargando contenido -->
-  <!-- <div class="center_loader">
+  <div class="center_loader">
     <div class="lds-ring">
       <div></div>
       <div></div>
       <div></div>
       <div></div>
     </div>
-  </div> -->
+  </div>
 
   <!-- nav bar del contenido -->
   <header>
@@ -41,52 +43,20 @@
   </header>
 
   <!-- Contenido de la tabla -->
-  <div class="body-content">
+  <div class="body-content invisible">
     <div class="content">
       <div class="route">
         <h1>Estudiante > Llamados de atención</h1>
       </div>
-      <div class="table">
-        <div class="item">
-          <div class="llamado">
-            <h1>Vocabulario ofensivo</h1>
-          </div>
-          <div class="articulo">
-            <h1>5006</h1>
-          </div>
-          <div class="docente">
-            <h1>
-              Juan Pablo Oquendo
-            </h1>
-          </div>
-          <div class="categoria">
-            leve
-          </div>
-        </div>
-        <div class="item">
-          <div class="llamado">
-            <h1>Vocabulario ofensivo</h1>
-          </div>
-          <div class="articulo">
-            <h1>5006</h1>
-          </div>
-          <div class="docente">
-            <h1>
-              Juan Pablo Oquendo
-            </h1>
-          </div>
-          <div class="categoria">
-            Grave
-          </div>
-        </div>
-      </div>
+      <div class="table"></div>
     </div>
 
   </div>
 
+  <script>
+    const person_information = <?php echo (json_encode($_SESSION));  ?>
+  </script>
 </body>
-<Script:src="students.js">
-  </Script:src>
-  </Script>
+<script src="../controller/students.js"></script>
 
 </html>
