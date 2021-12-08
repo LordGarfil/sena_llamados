@@ -1,7 +1,3 @@
-body{
-  background: gray;
-}
-
 .alert-father{
   position: absolute;
   top: 0;
@@ -35,11 +31,11 @@ body{
 }
 
 .alert-success .alert-header{
-  background: #2373E3;
+  background: #5D91F8;
 }
 
 .alert-danger .alert-header{
-  background: #E34923;
+  background: #F85D5D;
 }
 
 .alert-header .close{
@@ -64,9 +60,9 @@ button{
 }
 
 .alert-success button{
-  background: #2373E3;
+  background: #5D91F8;
 }
 
 .alert-danger button{
-  background: #E34923;
+  background: #F85D5D;
 }

@@ -5,7 +5,7 @@ window.onload = async function (){
   const loadData = await response.json();
   if(loadData != null || loadData.length > 0){
     loadStudentData();
-    fillTheTable([loadData]);
+    fillTheTable(loadData);
     stopLoading();
   }
 };
