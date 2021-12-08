@@ -30,6 +30,25 @@ function fetchOne($sql, $params)
     }
 }
 
+function fetch($sql, $params)
+{
+    require_once("../functions.php");
+    try {
+        $pdo = connect();
+        $sth = $pdo->prepare($sql);
+        $sth->execute($params);
+        $resData = $sth->fetchAll(PDO::FETCH_ASSOC);
+        
+        if ($resData) {
+            return $resData;
+        } else {
+            return catchErrors("No encontrado");
+        }
+    } catch (PDOException $e) {
+        return catchErrors($e->getMessage());
+    }
+}
+
 function insert($sql, $data)
 {
     require_once("../functions.php");

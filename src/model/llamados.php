@@ -21,7 +21,7 @@ function getLlamadosEstudiante($personaId){
       INNER JOIN categorias c ON r.categoria_id = c.id
       WHERE l.persona_id = ?";
  
-  $res = fetchOne($sql, [$personaId]);
+  $res = fetch($sql, [$personaId]);
   answer_json($res);
 }
 
@@ -53,7 +53,7 @@ function getLlamadosDocente($data){
       INNER JOIN categorias c ON r.categoria_id = c.id
       WHERE l.docente_id = ?";
 
-      $res = fetchOne($sql, [$personaId]);
+      $res = fetch($sql, [$personaId]);
   }else{
     $sql = "SELECT l.id llamado_id,
        r.id regla_id,
@@ -75,7 +75,7 @@ function getLlamadosDocente($data){
       WHERE l.docente_id = ?
       AND m.id = ?";
 
-      $res = fetchOne($sql, [$personaId, $materiaId]);
+      $res = fetch($sql, [$personaId, $materiaId]);
   }
   }
 
