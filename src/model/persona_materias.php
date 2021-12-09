@@ -8,9 +8,10 @@ function getMaterias($personaId){
        m.nombre materia
         FROM materias m
         INNER JOIN personas_materias pm ON m.id = pm.materia_id
-        WHERE pm.persona_id = ?";
+        WHERE pm.persona_id = ?
+        order by materia";
  
-  $res = fetchOne($sql, [$personaId]);
+  $res = fetch($sql, [$personaId]);
   answer_json($res);
 }
 
