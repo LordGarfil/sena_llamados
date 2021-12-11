@@ -52,17 +52,25 @@ class docente{
     let llamadosHtml = ""
 
     if(!llamados.error){
-      llamados.forEach(llamado => {
+
+      const llamadosNotZero = llamados.every(item => item.llamados == 0)
+
+      if(!llamadosNotZero){
+        llamados.forEach(llamado => {
         llamadosHtml += `
           <div class="table-item">
-          <div class="item-column">${llamado.regla_id}</div>
+          <div class="item-column">${llamado.estudiante_id}</div>
           <div class="item-column">${llamado.estudiante}</div>
-          <div class="item-column">${llamado.fecha}</div>
-          <div class="item-column"><button style="background: ${llamado.color}">${llamado.categoria}</button></div>
+          <div class="item-column">${llamado.correo}</div>
+          <div class="item-column"><div class="badge">${llamado.llamados}</div></div>
         </div>
         `
       })
       tabla.innerHTML = llamadosHtml
+      }else{
+        tabla.innerHTML = "No se encontraron llamados"
+      }
+      
     }else{
       tabla.innerHTML = "No se encontraron llamados"
     }

@@ -1,3 +1,14 @@
 @import url("./src/styles/alert.css");
 @import url("./src/styles/login.css");
 
+.badge{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  padding: 5px;
+  background: #5D91F8;
+  color: white;
+}

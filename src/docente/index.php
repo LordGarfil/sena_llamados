@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <link rel="stylesheet" href="../styles/docente.css">
   <link rel="stylesheet" href="../../app.css">
   <title>Profesor</title>
@@ -21,6 +22,7 @@
         <select name="" id="selectMaterias" class="transparent-bg"></select>
         |
         <span id="nombrePesona"></span>
+        <i class="fas fa-sign-out" id="logout"></i>
       </div>
     </div>
     <div class="container">
@@ -33,7 +35,6 @@
         </div>
       </div>
       <div class="div-table">
-      </div>
     </div>
     </div>
   </div>
@@ -41,6 +42,7 @@
   <script> 
     const userData = <?php echo(json_encode($userData)); ?>
   </script>
+  <script src="../controller/app.js"></script>
   <script src="../controller/docente.js"></script>
 </body>
 </html>
