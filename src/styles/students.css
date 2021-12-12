@@ -98,7 +98,7 @@ header{
     /* background-color: blueviolet; */
 }
 
-.item{
+.table-item{
     margin: 10px 0px ;
     height: 80px;
     background-color: #fff;
@@ -146,6 +146,195 @@ header{
     align-items: center;
     background-color: #5D91F8;
 }
+
+
+/* MODAL DEL ESTUDIANTE */
+
+.student-modal{
+    position: fixed; /*Utilizamos fixed para que la posicion sea totalmente fija*/
+    top: 50%; /*Le decimos que tenga un 50% de arriba hacia abajo*/
+    left: 50%; /*Le decimos que tenga un 50% de la izquierda a la derecha*/
+    transform: translate(-50%,-50%) scale(0); /* esto es para que siempre tome el 50% de la pantall completa */
+    transition: 200ms ease-in-out;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #fff;
+    width: 350px;
+    height: 70%;
+    overflow: auto;
+}
+
+.student-modal.active{
+    transform: translate(-50%,-50%) scale(1); 
+}
+
+.modal-header{
+    padding: 20px 10px 15px 15px;
+    display: block;
+}
+
+.modal-header .title{
+    padding: 0px 20px 20px 20px;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-header .close-button{
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: none;
+    font-size: 30px;
+    font-weight: 400;
+    color: grey;
+    display: flex;
+    justify-content: right;
+    width: 100%;
+}
+
+.modal-body{
+    margin: 0;
+    padding: 15px 20px 30px 30px;
+}
+
+.modal-body .input-data{
+    margin: 20px 0px;
+}
+
+.modal-body .input-data .item-key{
+    font-size: 18;
+    color: grey;
+}
+
+.modal-body .input-data .item-value{
+    font-size: 24;
+    color: black;
+    font-weight: bold;
+}
+
+#overlay{
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0,.5);
+    transition: 200ms ease-in-out;
+    z-index: 3;
+    pointer-events: none;
+}
+
+#overlay.active{
+    opacity: 1;
+    position: all;
+}
+
+
+/* MODAL DE LLAMADO DE ATENCION */
+
+.call-modal{
+    position: fixed; /*Utilizamos fixed para que la posicion sea totalmente fija*/
+    top: 50%; /*Le decimos que tenga un 50% de arriba hacia abajo*/
+    left: 50%; /*Le decimos que tenga un 50% de la izquierda a la derecha*/
+    transform: translate(-50%,-50%) scale(0); /* esto es para que siempre tome el 50% de la pantall completa */
+    transition: 200ms ease-in-out;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #fff;
+    width: 600px;
+    height: 60%;
+    overflow: auto;
+}
+
+.call-modal.active{
+    transform: translate(-50%,-50%) scale(1); 
+}
+
+.call-modal-header{
+    padding: 20px 10px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.call-modal-header .date{
+    font-size: 12px;
+    color: gray;
+}
+
+.call-modal-header .title{
+    padding: 0px 20px 20px 20px;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
+
+.call-modal-header .close-button{
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: none;
+    font-size: 30px;
+    font-weight: 400;
+    color: grey;
+    display: flex;
+    justify-content: right;
+}
+
+.call-modal-body{
+    margin: 0;
+    padding: 15px 20px 30px 30px;
+}
+
+.call-modal-body .input-data{
+    margin: 20px 0px;
+}
+
+.call-modal-body .input-data .item-key{
+    font-size: 18;
+    color: grey;
+}
+
+.call-modal-body .input-data .item-value{
+    font-size: 24;
+    color: black;
+    font-weight: bold;
+}
+
+#call-overlay{
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0,.5);
+    transition: 200ms ease-in-out;
+    z-index: 3;
+    pointer-events: none;
+}
+
+#call-overlay.active{
+    opacity: 1;
+    position: all;
+}
+
+
+
+
+
+
+
+
+
+
 
 .lds-ring {
     display: inline-block;
