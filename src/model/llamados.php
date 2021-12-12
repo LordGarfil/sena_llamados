@@ -60,6 +60,14 @@ function getLlamadosDocente($data){
   answer_json($res);
 }
 
+function createLlamados($data = []){
+  require_once("db.php");
+  require_once("../functions.php");
+
+  $res = insert('llamados', $data);
+  answer_json($res);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
   switch($_GET['filter']){
     case '1':
@@ -70,4 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
       getLlamadosDocente($_GET);
       break;
   }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  // $data = $_POST ? $_POST : file_get_contents("php://input");
+  createLlamados($_POST);
 }

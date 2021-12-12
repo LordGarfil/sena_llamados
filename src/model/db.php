@@ -49,17 +49,38 @@ function fetch($sql, $params)
     }
 }
 
-function insert($sql, $data)
+function insert($table, $data)
 {
     require_once("../functions.php");
     $pdo = connect();
-    $stmt = $pdo->prepare($sql);
     try {
-        $pdo->beginTransaction();
-        foreach ($data as $row) {
-            $stmt->execute($row);
+        $keys = implode(',', array_keys($data));
+        $data_ = [];
+        foreach ($data as $item) {
+            if (gettype($item) == "string") {
+                $item = "'" . $item . "'";
+            }
+            array_push($data_, $item);
         }
-        return $pdo->commit();
+        $values = implode(',', $data_);
+        $sql = "INSERT INTO {$table}({$keys})
+          VALUES ({$values})";
+        $stmt = $pdo->prepare($sql);
+
+        $pdo->beginTransaction();
+        $stmt->execute();
+        $res = $pdo->commit();
+        if ($res == "true") {
+            $sql = "select id
+                    from {$table}
+                    order by id desc
+                    limit 1";
+            $sth = $pdo->prepare($sql);
+            $sth->execute();
+
+            $userRes = $sth->fetch(PDO::FETCH_ASSOC);
+            return $userRes;
+        }
     } catch (Exception $e) {
         $pdo->rollback();
         throw $e;

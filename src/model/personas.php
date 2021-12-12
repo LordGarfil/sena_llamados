@@ -18,11 +18,14 @@ function getPersona($id = null)
 
 function createPersona($data = []){
   require_once("db.php");
+  require_once("usuarios.php");
   require_once("../functions.php");
-  $sql = "INSERT INTO personas(id, nombre, apellido, rol_id, correo)
-          VALUES (?, ?, ?, ?, ?)";
-  $res = insert($sql, $data);
-  answer_json($res);
+
+  // $persona = insert('personas', $data);
+  // $personaData = ["usuario_id" => $persona['id'], "contrasena" => "123"];
+  $personaData = ["persona_id" => '123456789', "contrasena" => "123", "rol_id" => 1];
+  $usuario = createUsuario($personaData);
+  answer_json($personaData);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -30,5 +33,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-  // createPersona(file_get_contents("php://input"));
+  createPersona($_POST);
 }

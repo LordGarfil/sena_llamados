@@ -1,7 +1,7 @@
 <?php
 
 
-function getUsuario($id = null)
+function getUsuario($id)
 {
   require_once("db.php");
   require_once("../functions.php");
@@ -14,13 +14,17 @@ function getUsuario($id = null)
   answer_json($res);
 }
 
-function createPersona($data = []){
+function createUsuario($data){
   require_once("db.php");
   require_once("../functions.php");
-  $sql = "INSERT INTO personas(id, nombre, apellido, rol_id, correo)
-          VALUES (?, ?, ?, ?, ?)";
-  $res = insert($sql, $data);
+
+  $res = insert('usuarios', $data);
   answer_json($res);
+  return $res;
+}
+
+function createEstudiante($data){
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
