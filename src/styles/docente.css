@@ -54,6 +54,32 @@ button {
   width: 100%;
 }
 
+.table-header {
+  align-items: center;
+  padding: 8px 30px;
+  border-radius: 5px;
+  box-shadow: 5px 3px 15px -3px rgba(0, 0, 0, 0.71);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  background: #5d91f8;
+  text-align: left;
+  color: white;
+}
+
+.table-header :nth-child(1) {
+  grid-column: 1/2;
+}
+.table-header :nth-child(2) {
+  grid-column: 3/5;
+}
+.table-header :nth-child(3) {
+  grid-column: 6/8;
+}
+.table-header :nth-child(4) {
+  grid-column: 9/10;
+}
+
+
 .table-item {
   align-items: center;
   background: white;
@@ -63,19 +89,46 @@ button {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   text-align: left;
+  cursor: pointer;
 }
 
-.table-item :nth-child(1){
-    grid-column: 1/2;
+.table-item :nth-child(1) {
+  grid-column: 1/2;
 }
-.table-item :nth-child(2){
-    grid-column: 3/5;
+.table-item :nth-child(2) {
+  grid-column: 3/5;
 }
-.table-item :nth-child(3){
-    grid-column: 6/8;
-    text-transform: uppercase;
+.table-item :nth-child(3) {
+  grid-column: 6/8;
+  text-transform: uppercase;
 }
-.table-item :nth-child(4){
-    grid-column: 9/10;
-    text-align: right;
+.table-item :nth-child(4) {
+  grid-column: 9/10;
+  text-align: right;
+}
+
+.actions-pop-up {
+  position: absolute;
+  right: 75px;
+  top: 140px;
+  background: white;
+  width: 150px;
+  box-shadow: 2px 2px 15px -5px rgba(0,0,0,0.58);
+  z-index: 10;
+}
+
+.action-item {
+  padding: 5px 8px;
+  transition: all 0.3s ease;
+}
+
+.action-item:hover {
+  color: white;
+  background: #5d91f8;
+  cursor: default;
+}
+
+.logout{
+  margin-left: 15px !important;
+  cursor: pointer;
 }

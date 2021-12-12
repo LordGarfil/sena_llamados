@@ -22,7 +22,7 @@
         <select name="" id="selectMaterias" class="transparent-bg"></select>
         |
         <span id="nombrePesona"></span>
-        <i class="fas fa-sign-out" id="logout"></i>
+        <i class="fas fa-sign-out logout" id="logout"></i>
       </div>
     </div>
     <div class="container">
@@ -31,7 +31,7 @@
           <span>Profesor > Llamados</span>
         </div>
         <div class="actions">
-          <button class="button-primary">Agregar</button>
+          <button class="button-primary" id="btnAgregar">Agregar</button>
         </div>
       </div>
       <div class="div-table">
@@ -43,6 +43,6 @@
     const userData = <?php echo(json_encode($userData)); ?>
   </script>
   <script src="../controller/app.js"></script>
-  <script src="../controller/docente.js"></script>
+  <script src="../controller/docente.js" type="module"></script>
 </body>
 </html>
