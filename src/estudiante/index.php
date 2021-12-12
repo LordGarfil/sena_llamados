@@ -33,6 +33,7 @@
         <div class="ficha"></div>
         <b>|</b>
         <div class="student-name"></div>
+        <i class="fas fa-sign-out" id="logout"></i>
       </div>
     </div>
   </header>

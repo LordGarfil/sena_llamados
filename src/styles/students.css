@@ -259,11 +259,16 @@ header{
     padding: 20px 10px 15px 15px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .call-modal-header .date{
     font-size: 12px;
     color: gray;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .call-modal-header .title{
@@ -272,6 +277,7 @@ header{
     font-weight: 600;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .call-modal-header .close-button{
@@ -284,8 +290,10 @@ header{
     font-size: 30px;
     font-weight: 400;
     color: grey;
+    height: 50px;
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .call-modal-body{
