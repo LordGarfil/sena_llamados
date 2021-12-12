@@ -72,5 +72,6 @@
   </script>
 </body>
 <script src="../controller/students.js"></script>
+<script src="../controller/app.js"></script>
 
 </html>
