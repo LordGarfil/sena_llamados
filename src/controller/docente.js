@@ -96,6 +96,7 @@ class docente{
 
     const buttonAgregar = document.querySelector('#btnAgregar')
     buttonAgregar.onclick = (e) =>{
+      console.log(this.buttonToogle);
       if(this.buttonToogle == 0){
         this.showAgregarOptions()
       }else{
