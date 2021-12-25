@@ -30,14 +30,14 @@
   height: 80px;
   /* border-radius: TOP, RIGHT , BOTTOM , LEFT */
   border-radius: 5px 10px 5px 250px;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   cursor: pointer;
   background-color: #5d91f8;
   display: flex;
   justify-content: right;
   align-items: flex-start;
-  padding: 10px 10px 0px 0px;
+  padding: 15px 15px 0px 0px;
   font-weight: bold;
 }
 
