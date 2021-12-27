@@ -28,14 +28,12 @@ class Reglas {
     cerrarModalReglas.onclick = (e) => {
       this.hideModal();
     };
-
-    // alert("Show the students forms");
   }
   hideModal() {
     var overlay = document.querySelector("#overlay");
     var studentModal = document.querySelector(".regla-modal");
-    studentModal.classList.remove("active");
-    overlay.classList.remove("active");
+    studentModal.remove();
+    overlay.remove();
   }
   updateForm() {}
 }
