@@ -26,6 +26,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  // $data = $_POST ? $_POST : file_get_contents("php://input");
   getReglas();
 }
