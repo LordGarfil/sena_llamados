@@ -7,9 +7,8 @@ function getPersona($id = null)
   require_once("../functions.php");
 
   $sql = "SELECT p.id personaId, concat(p.nombre, ' ', p.apellido) nombre,
-       p.correo, r.id rolId, r.nombre rol
+       p.correo
       from personas p
-      inner join roles r on p.rol_id = r.id
       where p.id = ?";
  
   $res = fetchOne($sql, [$id]);

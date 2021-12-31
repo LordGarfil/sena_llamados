@@ -11,5 +11,5 @@ function createReglas($data = []){
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   // $data = $_POST ? $_POST : file_get_contents("php://input");
-  createLlamados($_POST);
+  createReglas($_POST);
 }
