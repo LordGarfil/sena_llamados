@@ -1,0 +1,141 @@
+/* MODAL DE REGLA */
+
+.regla-modal {
+  position: fixed; /*Utilizamos fixed para que la posicion sea totalmente fija*/
+  top: 50%; /*Le decimos que tenga un 50% de arriba hacia abajo*/
+  left: 50%; /*Le decimos que tenga un 50% de la izquierda a la derecha*/
+  transform: translate(-50%, -50%) scale(0); /* esto es para que siempre tome el 50% de la pantall completa */
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: #fff;
+  width: 350px;
+  height: 70%;
+  overflow: auto;
+  padding: 0%;
+}
+
+.regla-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.regla-modal-header {
+  padding: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.regla-modal-header .close-button {
+  width: 80px;
+  height: 80px;
+  /* border-radius: TOP, RIGHT , BOTTOM , LEFT */
+  border-radius: 5px 10px 5px 250px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #5d91f8;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+  padding: 15px 15px 0px 0px;
+  font-weight: bold;
+}
+
+.regla-modal-header .title {
+  height: 80px;
+  padding: 0px 10px 0px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+}
+
+.modal-body {
+  margin: 0;
+  padding: 15px 30px 15px 30px;
+  display: block;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-body .field {
+  width: 290px;
+  height: 30px;
+  margin: 15px auto;  
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
+}
+
+.modal-body .text_area {
+  width: 290px;
+  height: 100px;
+  margin: 15px auto;
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
+}
+.modal-body .category {
+  width: 290px;
+  height: 30px;
+  margin: 15px auto;
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
+  color: grey;
+}
+.modal-body .save_button {
+  padding: 10px 30px;
+  margin: 20px auto;
+  justify-content: center;
+  width: 150px;
+  height: 40px;
+  border: none;
+  background-color: #5d91f8;
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-weight: 300;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  transition: 200ms ease-in-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  position: all;
+}
