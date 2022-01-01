@@ -16,7 +16,7 @@ class Reglas {
       </form>
     </div>`;
 
-    // agregamos el mmodal
+    // agregamos el modal
     var father = document.querySelector(".app");
     const modal = document.createElement("div");
     modal.classList.add("regla-modal");
@@ -42,7 +42,7 @@ class Reglas {
     /// Agregamos las categorias
     var categorySelect = document.querySelector("#categories");
     var categoryData = await this.getCategoriasReglas();
-    this.cargarSelect(categorySelect, categoryData, "Categoria");
+    this.cargarSelect(categorySelect, categoryData, "Seleccione una categoria");
 
     /// agregamos metodo submit
     const reglaForm = document.getElementById("regla-form");

@@ -147,6 +147,7 @@ class docente{
       this.hideAgregarOptions()
       const llamado = new Llamados()
       llamado.addForm()
+      llamado.loggedPerson = userData;
     }
   }
 
