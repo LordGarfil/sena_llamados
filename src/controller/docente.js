@@ -37,7 +37,7 @@ class docente{
   }
 
   async getPersonaMaterias(){
-    const req = await fetch(`../model/persona_materias.php?persona_id=${userData.persona_id}`)
+    const req = await fetch(`../model/materias_persona.php?persona_id=${userData.persona_id}`)
     const res = await req.json()
     return res
   }
