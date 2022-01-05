@@ -10,7 +10,7 @@
   border-radius: 50%;
   height: 15px;
   width: 15px;
-  padding: 5px;
+  padding: 15px;
   background: #5D91F8;
   color: white;
 }
@@ -24,4 +24,5 @@
 select{
   padding: 5px;
   border-radius: 8px;
+  outline: none;
 }

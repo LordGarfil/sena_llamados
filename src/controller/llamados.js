@@ -1,6 +1,8 @@
 import notify from "../views/notify.js";
+import {Mail} from "./mail.js";
 class Llamados {
   loggedPerson = {};
+  estudiantes = []
 
   async addForm() {
     var html = `<!-- modal de datos del usuario -->
@@ -60,12 +62,12 @@ class Llamados {
 
     /// Agregamos los estudiantes iniciales
     const estudianteSelect = document.querySelector("#estudiante");
-    const estudianteData = await this.getEstudiantes(materiaSelected);
-    this.cargarSelectEstudiantes(estudianteSelect, estudianteData);
+    this.estudiantes = await this.getEstudiantes(materiaSelected);
+    this.cargarSelectEstudiantes(estudianteSelect, this.estudiantes);
 
     /// agregamos metodo submit
     const llamadoForm = document.getElementById("llamado-form");
-    llamadoForm.addEventListener("submit", this.onSubmit);
+    llamadoForm.addEventListener("submit", e => this.onSubmit(e));
   }
 
   hideModal() {
@@ -152,8 +154,8 @@ class Llamados {
   async onMateriaChange(llamados) {
     const materiaSelected = document.querySelector("#materias").value;
     const estudianteSelect = document.querySelector("#estudiante");
-    const estudianteData = await llamados.getEstudiantes(materiaSelected);
-    llamados.cargarSelectEstudiantes(estudianteSelect, estudianteData);
+    this.estudiantes = await llamados.getEstudiantes(materiaSelected);
+    llamados.cargarSelectEstudiantes(estudianteSelect, this.estudiantes);
   }
 
   async onSubmit(event) {
@@ -162,6 +164,7 @@ class Llamados {
     var materiaId = document.getElementsByName("materia_id")[0].value;
     var personaId = document.getElementsByName("persona_id")[0].value;
     var observacion = document.getElementsByName("observacion")[0].value;
+    var regla = document.getElementsByName("regla_id")[0].selectedOptions[0].textContent;
     console.log(reglaId)
     console.log(materiaId)
     console.log(personaId)
@@ -185,6 +188,11 @@ class Llamados {
       if (result == true) {
         llamados.hideModal();
       }
+      const estudiante = this.estudiantes.find(estudiante => estudiante.id == personaId)
+      const titulo = "Nuevo llamado | " + regla;
+      const mensaje = "Se ha generado un llamado de atencion a su nombre: <br/>" + observacion
+      const mail = new Mail(estudiante.correo, titulo, mensaje)
+      mail.send()
     }
   }
 
