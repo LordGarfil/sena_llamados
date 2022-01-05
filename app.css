@@ -1,0 +1,27 @@
+@import url("./src/styles/alert.css");
+@import url("./src/styles/login.css");
+@import url("./src/styles/students.css");
+@import url("./src/styles/reglas.css");
+
+.badge{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  padding: 5px;
+  background: #5D91F8;
+  color: white;
+}
+
+.transparent-bg{
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+select{
+  padding: 5px;
+  border-radius: 8px;
+}
