@@ -4,7 +4,7 @@ function getReglas(){
   require_once("db.php");
   require_once("../functions.php");
 
-  $sql = "SELECT r.articulo, r.nombre, c.id categoria_id, c.nombre categoria, r.descripcion FROM reglas r
+  $sql = "SELECT r.id,  r.articulo, r.nombre, c.id categoria_id, c.nombre categoria, r.descripcion FROM reglas r
     inner join categorias c on r.categoria_id = c.id";
  
   $res = fetch($sql, []);

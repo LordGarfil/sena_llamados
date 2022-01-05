@@ -37,7 +37,7 @@ class docente{
   }
 
   async getPersonaMaterias(){
-    const req = await fetch(`../model/persona_materias.php?persona_id=${userData.persona_id}`)
+    const req = await fetch(`../model/materias_persona.php?persona_id=${userData.persona_id}`)
     const res = await req.json()
     return res
   }
@@ -96,6 +96,7 @@ class docente{
 
     const buttonAgregar = document.querySelector('#btnAgregar')
     buttonAgregar.onclick = (e) =>{
+      console.log(this.buttonToogle);
       if(this.buttonToogle == 0){
         this.showAgregarOptions()
       }else{
@@ -146,6 +147,7 @@ class docente{
       this.hideAgregarOptions()
       const llamado = new Llamados()
       llamado.addForm()
+      llamado.loggedPerson = userData;
     }
   }
 
