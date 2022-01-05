@@ -62,11 +62,9 @@ function getLlamadosDocente($data){
 
 function createLlamados($data = []){
   require_once("db.php");
-  require_once("mail.php");
   require_once("../functions.php");
 
   $res = insert('llamados', $data);
-  sendMail($data);
   answer_json($res);
 }
 
