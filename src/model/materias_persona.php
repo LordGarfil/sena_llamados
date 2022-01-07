@@ -1,21 +1,27 @@
 <?php
 
-function getMaterias($personaId){
-  require_once("db.php");
-  require_once("../functions.php");
-
-  $sql = "SELECT m.id materia_id,
+class Materias_personas
+{
+  public function __construct()
+  {
+    include("db.php");
+    $this->db = new Db();
+  }
+  function getMaterias($personaId)
+  {
+    $sql = "SELECT m.id materia_id,
        m.nombre materia
         FROM materias m
         INNER JOIN personas_materias pm ON m.id = pm.materia_id
         WHERE pm.persona_id = ?
         order by materia";
- 
-  $res = fetch($sql, [$personaId]);
-  answer_json($res);
+
+    $res = $this->db->fetch($sql, [$personaId]);
+    answer_json($res);
+  }
 }
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  getMaterias($_GET['persona_id']);
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  $mp = new Materias_personas();
+  $mp->getMaterias($_GET['persona_id']);
 }

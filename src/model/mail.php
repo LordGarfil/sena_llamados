@@ -6,46 +6,55 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-function sendMail($data)
+class Mail
 {
-  //Load Composer's autoloader
-  require '../../vendor/autoload.php';
-  require_once("../functions.php");
+  public function __construct()
+  {
+    include("db.php");
+    $this->db = new Db();
+  }
 
-  $data = json_decode($data);
-  //Create an instance; passing `true` enables exceptions
-  $mail = new PHPMailer(true);
+  function sendMail($data)
+  {
+    //Load Composer's autoloader
+    require '../../vendor/autoload.php';
 
-  try {
-    // $persona = getReceptor($data['persona_id']);
-    // answer_json($persona);
-    //Server settings
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'mailer.sena@gmail.com';                     //SMTP username
-    $mail->Password   = 'mailer123';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $data = json_decode($data);
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
 
-    //Recipients
-    $mail->setFrom('mailer.sena@gmail.com', 'Mailer');
-    $mail->addAddress($data->receptor, 'Joe User');     //Add a recipient
+    try {
+      // $persona = getReceptor($data['persona_id']);
+      // answer_json($persona);
+      //Server settings
+      $mail->isSMTP();                                            //Send using SMTP
+      $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+      $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+      $mail->Username   = 'mailer.sena@gmail.com';                     //SMTP username
+      $mail->Password   = 'mailer123';                               //SMTP password
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+      $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+      //Recipients
+      $mail->setFrom('mailer.sena@gmail.com', 'Mailer');
+      $mail->addAddress($data->receptor, 'Joe User');     //Add a recipient
 
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = $data->titulo;
-    $mail->Body    = $data->mensaje;
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-    $mail->send();
-  } catch (Exception $e) {
-    $error = new stdClass;
-    $error->error = true;
-    $error->message = $mail->ErrorInfo;
+      //Content
+      $mail->isHTML(true);                                  //Set email format to HTML
+      $mail->Subject = $data->titulo;
+      $mail->Body    = $data->mensaje;
+      $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+      $mail->send();
+    } catch (Exception $e) {
+      $error = new stdClass;
+      $error->error = true;
+      $error->message = $mail->ErrorInfo;
+    }
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  sendMail(file_get_contents("php://input"));
+  $m = new Mail();
+  $m->sendMail(file_get_contents("php://input"));
 }

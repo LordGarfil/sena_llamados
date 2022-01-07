@@ -1,36 +1,39 @@
 <?php
 
-
-function getUsuario($id)
+class Usuarios
 {
-  require_once("db.php");
-  require_once("../functions.php");
-
-  $sql = "SELECT persona_id
+  public function __construct()
+  {
+    include("db.php");
+    $this->db = new Db();
+  }
+  function getUsuario($id)
+  {
+    $sql = "SELECT persona_id
       from usuarios u
       where u.persona_id = ?";
- 
-  $res = fetchOne($sql, [$id]);
-  answer_json($res);
+
+    $res = $this->db->fetchOne($sql, [$id]);
+    answer_json($res);
+  }
+
+  function createUsuario($data)
+  {
+    $res = $this->db->insert('usuarios', $data);
+    answer_json($res);
+    return $res;
+  }
+
+  function createEstudiante($data)
+  {
+  }
 }
 
-function createUsuario($data){
-  require_once("db.php");
-  require_once("../functions.php");
-
-  $res = insert('usuarios', $data);
-  answer_json($res);
-  return $res;
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  $u = new Usuarios();
+  $u->getUsuario($_GET['id']);
 }
 
-function createEstudiante($data){
-
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  getUsuario($_GET['id']);
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // createPersona(file_get_contents("php://input"));
 }

@@ -1,24 +1,24 @@
 <?php
 
-
-function getPersona($id = null)
+class Personas{
+  public function __construct()
+  {
+    include("db.php");
+    $this->db = new Db();
+  }
+  function getPersona($id = null)
 {
-  require_once("db.php");
-  require_once("../functions.php");
-
   $sql = "SELECT p.id personaId, concat(p.nombre, ' ', p.apellido) nombre,
        p.correo
       from personas p
       where p.id = ?";
  
-  $res = fetchOne($sql, [$id]);
+  $res = $this->db->fetchOne($sql, [$id]);
   answer_json($res);
 }
 
 function createPersona($data = []){
-  require_once("db.php");
-  require_once("usuarios.php");
-  require_once("../functions.php");
+  require("usuarios.php");
 
   // $persona = insert('personas', $data);
   // $personaData = ["usuario_id" => $persona['id'], "contrasena" => "123"];
@@ -26,11 +26,14 @@ function createPersona($data = []){
   $usuario = createUsuario($personaData);
   answer_json($personaData);
 }
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-  getPersona($_GET['id']);
+  $p = new Personas();
+  $p->getPersona($_GET['id']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-  createPersona($_POST);
+  $p = new Personas();
+  $p->createPersona($_POST);
 }

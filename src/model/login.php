@@ -1,10 +1,14 @@
 <?php
 
-function login($data = null)
-{
-  require_once("db.php");
-  require_once("../functions.php");
+class Login{
+  public function __construct()
+  {
+    include("db.php");
+    $this->db = new Db();
+  }
 
+  function login($data = null)
+{
   if ($data) {
     if (isset($data['user']) && isset($data['password'])) {
       $user = $data['user'];
@@ -20,7 +24,7 @@ function login($data = null)
             where u.persona_id = ?
             and u.contrasena = ?";
 
-      $res = fetchOne($sql, [$user, $password]);
+      $res = $this->db->fetchOne($sql, [$user, $password]);
 
       if($res && !isset($res['error'])){
         session_start();
@@ -43,6 +47,7 @@ function login($data = null)
     $error = catchErrors("Debe enviar un usuario y contraseña");
     answer_json($error);
   }
+}
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

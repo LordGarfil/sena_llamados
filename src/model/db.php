@@ -1,88 +1,95 @@
 <?php
 
-function connect()
+class Db
 {
-    require_once '../../config.php';
+  public function __construct()
+  {
+    require '../../config.php';
+    require("../functions.php");
+
+    $this->DB_URL = $DB_URL;
+    $this->DB_USER = $DB_USER;
+    $this->DB_PASSWORD = $DB_PASSWORD;
+
+    $this->pdo = $this->connect();
+  }
+  function connect()
+  {
     try {
-        $pdo = new PDO($DB_URL, $DB_USER, $DB_PASSWORD);
-        return $pdo;
+      $pdo = new PDO($this->DB_URL, $this->DB_USER, $this->DB_PASSWORD);
+      return $pdo;
     } catch (PDOException $e) {
-        print "¡Error!: " . $e->getMessage() . "<br/>";
-        die();
+      print "¡Error!: " . $e->getMessage() . "<br/>";
+      die();
     }
-}
+  }
 
-function fetchOne($sql, $params)
-{
-    require_once("../functions.php");
+  function fetchOne($sql, $params)
+  {
     try {
-        $pdo = connect();
-        $sth = $pdo->prepare($sql);
-        $sth->execute($params);
+      $sth = $this->pdo->prepare($sql);
+      $sth->execute($params);
 
-        if ($userRes = $sth->fetch(PDO::FETCH_ASSOC)) {
-            return $userRes;
-        } else {
-            return catchErrors("No encontrado");
-        }
+      if ($userRes = $sth->fetch(PDO::FETCH_ASSOC)) {
+        return $userRes;
+      } else {
+        return catchErrors("No encontrado");
+      }
     } catch (PDOException $e) {
-        return catchErrors($e->getMessage());
+      return catchErrors($e->getMessage());
     }
-}
+  }
 
-function fetch($sql, $params)
-{
-    require_once("../functions.php");
+  function fetch($sql, $params)
+  {
     try {
-        $pdo = connect();
-        $sth = $pdo->prepare($sql);
-        $sth->execute($params);
-        $resData = $sth->fetchAll(PDO::FETCH_ASSOC);
-        
-        if ($resData) {
-            return $resData;
-        } else {
-            return catchErrors("No encontrado");
-        }
+      $sth = $this->pdo->prepare($sql);
+      $sth->execute($params);
+      $resData = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+      if ($resData) {
+        return $resData;
+      } else {
+        return catchErrors("No encontrado");
+      }
     } catch (PDOException $e) {
-        return catchErrors($e->getMessage());
+      return catchErrors($e->getMessage());
     }
-}
+  }
 
-function insert($table, $data)
-{
-    require_once("../functions.php");
-    $pdo = connect();
+  function insert($table, $data)
+  {
     try {
-        $keys = implode(',', array_keys($data));
-        $data_ = [];
-        foreach ($data as $item) {
-            if (gettype($item) == "string") {
-                $item = "'" . $item . "'";
-            }
-            array_push($data_, $item);
+      $keys = implode(',', array_keys($data));
+      $data_ = [];
+      foreach ($data as $item) {
+        if (gettype($item) == "string") {
+          $item = "'" . $item . "'";
         }
-        $values = implode(',', $data_);
-        $sql = "INSERT INTO {$table}({$keys})
+        array_push($data_, $item);
+      }
+      $values = implode(',', $data_);
+      $sql = "INSERT INTO {$table}({$keys})
           VALUES ({$values})";
-        $stmt = $pdo->prepare($sql);
+      $stmt = $this->pdo->prepare($sql);
 
-        $pdo->beginTransaction();
-        $stmt->execute();
-        $res = $pdo->commit();
-        if ($res == "true") {
-            $sql = "select id
+      $this->pdo->beginTransaction();
+      $stmt->execute();
+      $res = $this->pdo->commit();
+      if ($res == "true") {
+        $sql = "select id
                     from {$table}
                     order by id desc
                     limit 1";
-            $sth = $pdo->prepare($sql);
-            $sth->execute();
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute();
 
-            $userRes = $sth->fetch(PDO::FETCH_ASSOC);
-            return $userRes;
-        }
+        $userRes = $sth->fetch(PDO::FETCH_ASSOC);
+        return $userRes;
+      }
     } catch (Exception $e) {
-        $pdo->rollback();
-        throw $e;
+      $this->pdo->rollback();
+      throw $e;
     }
+  }
 }
