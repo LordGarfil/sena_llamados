@@ -51,5 +51,6 @@ class Login{
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  login($_POST);
+  $l = new Login();
+  $l->login($_POST);
 }
