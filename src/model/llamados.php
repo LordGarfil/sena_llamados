@@ -8,8 +8,11 @@ class Llamados
     $this->db = new Db();
   }
 
-  function getLlamadosEstudiante($personaId)
+  function getLlamadosEstudiante($data)
   {
+    $personaId = isset($data['persona_id']) ? $data['persona_id'] : null;
+    $materiaId = isset($data['materia_id']) ? $data['materia_id'] : null;
+
     $sql = "SELECT l.id llamado_id,
        r.id regla_id,
        r.nombre regla,
@@ -25,9 +28,9 @@ class Llamados
       INNER JOIN reglas r ON l.regla_id = r.id
       INNER JOIN materias m ON l.materia_id = m.id
       INNER JOIN categorias c ON r.categoria_id = c.id
-      WHERE l.persona_id = ?";
+      WHERE l.persona_id = ? and l.materia_id = ?";
 
-    $res = $this->db->fetch($sql, [$personaId]);
+    $res = $this->db->fetch($sql, [$personaId, $materiaId]);
     answer_json($res);
   }
 
@@ -75,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $l = new Llamados();
   switch ($_GET['filter']) {
     case '1':
-      $l->getLlamadosEstudiante($_GET['persona_id']);
+      $l->getLlamadosEstudiante($_GET);
       break;
 
     case '2':

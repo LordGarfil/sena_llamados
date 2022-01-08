@@ -49,6 +49,13 @@ class docente{
     return res
   }
 
+  async getLlamadosEstudiante(personaId){
+    const materiaId = document.querySelector('#selectMaterias').value
+    const req = await fetch(`../model/llamados.php?filter=1&persona_id=${personaId}&materia_id=${materiaId}`)
+    const res = await req.json()
+    return res
+  }
+
   async cargarTablaLlamados(){
     const tabla = document.querySelector('.div-table')
     const llamados = await this.getLlamadosDocente()
@@ -71,14 +78,15 @@ class docente{
         llamados.forEach(llamado => {
         llamadosHtml += `
           <div class="table-item">
-          <div class="item-column">${llamado.estudiante_id}</div>
-          <div class="item-column">${llamado.estudiante}</div>
-          <div class="item-column">${llamado.correo}</div>
-          <div class="item-column"><div class="badge">${llamado.llamados}</div></div>
+          <div class="item-column" name="personaId">${llamado.estudiante_id}</div>
+          <div class="item-column" name="nombre">${llamado.estudiante}</div>
+          <div class="item-column" name="correo">${llamado.correo}</div>
+          <div class="item-column" name="numLlamados"><div class="badge">${llamado.llamados}</div></div>
         </div>
         `
       })
       tabla.innerHTML += llamadosHtml
+      this.listenToTableItems()
       }else{
         tabla.innerHTML = "No se encontraron llamados"
       }
@@ -103,6 +111,102 @@ class docente{
         this.hideAgregarOptions()
       }
     }
+
+  }
+
+  async listenToTableItems() {
+    const tableItem = document.querySelectorAll('.table-item')
+    if(tableItem){
+      tableItem.forEach(item => {
+      item.addEventListener('click', (e) => {
+        const target = e.target
+        let itemTarget = null
+        if(target.classList.contains('table-item')){
+          itemTarget = target
+        }else{
+          itemTarget = target.parentNode
+        }
+        const personaId = itemTarget.querySelector('div[name=personaId]').textContent
+        this.getLlamadosEstudiante(personaId)
+        .then(llamados => {
+           this.mostrarLlamadosEstudiante()
+        })
+      })
+    })
+    }
+  }
+
+  mostrarLlamadosEstudiante(llamados){
+    this.addForm() 
+    // llamados.forEach(llamado => {
+
+    // })
+  }
+
+  addForm(){
+    const html = `
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="info-header"><span>Llamados de atención | Juan Restrepo</span></div>
+      <div class="close-button">x</div>
+    </div>
+    <div class="modal-body">
+      <div class="rows-column">
+        <div class="row-item">
+          <div class="top-data">
+            <strong>5006 - Vocabulario ofensivo</strong>
+            <div class="categoria">
+              Grave
+            </div>
+          </div>
+          <div class="bottom-data">
+            <small>
+              2021-11-24
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="info-column">
+        <select name="regla">
+          <option value=""></option>
+        </select>
+        <select name="materia">
+          <option value=""></option>
+        </select>
+        <input type="text" disabled />
+        <textarea name="observacion" cols="30" rows="10"></textarea>
+        <input type="text" value="" id="llamadoId" hidden />
+        <div class="actions">
+          <button>Guardar</button>
+          <button>Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    `;
+
+    // agregamos el modal
+    var father = document.querySelector(".app");
+    const modal = document.createElement("div");
+    modal.classList.add("modal-extended");
+    modal.classList.add("active");
+    modal.setAttribute("id", "llamados-modal");
+    modal.innerHTML += html;
+
+    //Creamos el overlay
+    const overlay = document.createElement("div");
+    overlay.classList.add("active");
+    overlay.setAttribute("id", "overlay");
+
+    //Agregamos el formulario y el overlay
+    father.appendChild(overlay);
+    father.appendChild(modal);
+
+    // Close button in modal
+    var cerrarModalReglas = document.querySelector(".close-button");
+    cerrarModalReglas.onclick = (e) => {
+      this.hideModal();
+    };
   }
 
   showAgregarOptions(){

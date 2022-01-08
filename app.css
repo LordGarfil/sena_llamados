@@ -26,3 +26,81 @@ select{
   border-radius: 8px;
   outline: none;
 }
+
+.modal-extended{
+  width: 70vw;
+  height: 60vh;
+  padding: 8px;
+  position: fixed; /*Utilizamos fixed para que la posicion sea totalmente fija*/
+  top: 50%; /*Le decimos que tenga un 50% de arriba hacia abajo*/
+  left: 50%; /*Le decimos que tenga un 50% de la izquierda a la derecha*/
+  transform: translate(-50%, -50%); /* esto es para que siempre tome el 50% de la pantall completa */
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.modal-extended .active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-container{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.info-header{
+  width: 100%;
+}
+
+.modal-extended .modal-body{
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.rows-column{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.row-item{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  box-shadow: 0px 7px 15px -1px rgba(0,0,0,0.5);
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.row-item .top-data{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items:center
+}
+
+.row-item .top-data strong{
+  color: gray;
+}
+
+.row-item .bottom-data small{
+  color: gray;
+}
+
+.row-item .bottom-data{
+  display: flex;
+  flex-direction: row;
+}
