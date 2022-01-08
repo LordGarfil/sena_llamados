@@ -255,6 +255,13 @@ class docente{
     }
   }
 
+  hideModal() {
+    var overlay = document.querySelector("#overlay");
+    var modal = document.querySelector(".modal-extended");
+    modal.remove();
+    overlay.remove();
+  }
+
 }
 
 const app = new docente()
