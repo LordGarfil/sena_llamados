@@ -129,7 +129,7 @@ class docente{
         const personaId = itemTarget.querySelector('div[name=personaId]').textContent
         this.getLlamadosEstudiante(personaId)
         .then(llamados => {
-           this.mostrarLlamadosEstudiante()
+           this.mostrarLlamadosEstudiante(llamados)
         })
       })
     })
@@ -138,9 +138,76 @@ class docente{
 
   mostrarLlamadosEstudiante(llamados){
     this.addForm() 
-    // llamados.forEach(llamado => {
+    console.log(llamados)
+    const RowsColumn = document.querySelector('.rows-column')
+    llamados.forEach(llamado => {
+      RowsColumn.appendChild(this.mostrarRowItems(llamado))
+    })
 
-    // })
+    const rowsItem = document.querySelectorAll('.row-item')
+    rowsItem.forEach(row => {
+      row.addEventListener('click', (e) => {
+        const parent = e.target.classList.contains('row-item') ? e.target : e.target.parentElement.parentElement
+        const reglaId = parent.querySelector('div[name=reglaId]').textContent
+        const materiaId = parent.querySelector('div[name=materiaId]').textContent
+        const estudiante = parent.querySelector('div[name=estudiante]').textContent
+        const observacion = parent.querySelector('div[name=observacion]').textContent
+
+        this.mostrarLlamadoDetails({
+          reglaId, materiaId, estudiante, observacion
+        })
+
+      })
+    })
+
+  }
+
+  mostrarRowItems(data){
+    const container = document.createElement('div')
+    container.className = 'row-item'
+    const html = `
+          <div class="top-data">
+            <strong name="regla">${data.regla}</strong>
+            <div class="categoria" style="background:${data.color}">
+              ${data.categoria}
+            </div>
+          </div>
+          <div class="bottom-data">
+            <small>
+              ${data.fecha}
+            </small>
+          </div>
+          <div class="hidden-info">
+            <div name="reglaId" hidden>${data.regla_id}></div>
+            <div name="materiaId" hidden>${data.materia_id}></div>
+            <div name="materia" hidden>${data.materia}></div>
+            <div name="estudiante_id" hidden>${data.estudiante_id}></div>
+            <div name="estudiante" hidden>${data.estudiante}></div>
+            <div name="observacion" hidden>${data.observacion}></div>
+          </div>
+    `
+    container.innerHTML = html
+    return container
+  }
+
+  mostrarLlamadoDetails(data){
+    const infoColumn = document.querySelector('.info-column')
+    const html = `
+        <select name="regla">
+          <option value="${data.reglaId}">Regla</option>
+        </select>
+        <select name="materia">
+          <option value="${data.materiaId}">Materia</option>
+        </select>
+        <input type="text" value="${data.estudiante}" disabled >
+        <textarea name="observacion" cols="30" rows="10">${data.observacion}</textarea>
+        
+        <div class="actions">
+          <button>Guardar</button>
+          <button>Eliminar</button>
+        </div>
+    `
+    infoColumn.innerHTML = html
   }
 
   addForm(){
@@ -152,34 +219,9 @@ class docente{
     </div>
     <div class="modal-body">
       <div class="rows-column">
-        <div class="row-item">
-          <div class="top-data">
-            <strong>5006 - Vocabulario ofensivo</strong>
-            <div class="categoria">
-              Grave
-            </div>
-          </div>
-          <div class="bottom-data">
-            <small>
-              2021-11-24
-            </small>
-          </div>
-        </div>
+        
       </div>
       <div class="info-column">
-        <select name="regla">
-          <option value=""></option>
-        </select>
-        <select name="materia">
-          <option value=""></option>
-        </select>
-        <input type="text" disabled />
-        <textarea name="observacion" cols="30" rows="10"></textarea>
-        <input type="text" value="" id="llamadoId" hidden />
-        <div class="actions">
-          <button>Guardar</button>
-          <button>Eliminar</button>
-        </div>
       </div>
     </div>
   </div>

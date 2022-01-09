@@ -15,10 +15,14 @@ class Llamados
 
     $sql = "SELECT l.id llamado_id,
        r.id regla_id,
-       r.nombre regla,
+       concat(r.articulo, ' - ', r.nombre) regla,
+       m.id materia_id,
        m.nombre materia,
        concat(d.nombre, ' ', d.apellido) docente,
-       l.observacion observaciones,
+       p.id estudiante_id,
+       concat(p.nombre, ' ', p.apellido) estudiante,
+       l.observacion observacion,
+       c.id categoria_id,
        c.nombre categoria,
        c.color,
        l.fecha_creacion fecha

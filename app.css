@@ -3,7 +3,7 @@
 @import url("./src/styles/students.css");
 @import url("./src/styles/reglas.css");
 
-.badge{
+.badge {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,96 +11,176 @@
   height: 15px;
   width: 15px;
   padding: 15px;
-  background: #5D91F8;
+  background: #5d91f8;
   color: white;
 }
 
-.transparent-bg{
+.transparent-bg {
   background: transparent;
   border: 1px solid white;
   color: white;
 }
 
-select{
+select {
   padding: 5px;
   border-radius: 8px;
   outline: none;
 }
 
-.modal-extended{
+.modal-extended {
   width: 70vw;
   height: 60vh;
   padding: 8px;
   position: fixed; /*Utilizamos fixed para que la posicion sea totalmente fija*/
   top: 50%; /*Le decimos que tenga un 50% de arriba hacia abajo*/
   left: 50%; /*Le decimos que tenga un 50% de la izquierda a la derecha*/
-  transform: translate(-50%, -50%); /* esto es para que siempre tome el 50% de la pantall completa */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* esto es para que siempre tome el 50% de la pantall completa */
   transition: 200ms ease-in-out;
   border-radius: 10px;
   z-index: 10;
   background-color: #fff;
-  overflow: auto;
+  /* overflow: visible; */
 }
 
 .modal-extended .active {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.modal-container{
+.modal-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.modal-header{
+.modal-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.info-header{
+.modal-extended .modal-header .close-button {
+  padding: 5px;
+  background: #5d91f8;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  right: -12px;
+  top: -8px;
+}
+
+.info-header {
   width: 100%;
 }
 
-.modal-extended .modal-body{
+.modal-extended .modal-body {
   display: flex;
   flex-direction: row;
   gap: 30px;
   align-items: flex-start;
+  overflow: auto;
 }
 
-.rows-column{
+.rows-column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px;
   width: 100%;
+  height: 48vh;
+  overflow-y: auto;
 }
 
-.row-item{
+.row-item {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  box-shadow: 0px 7px 15px -1px rgba(0,0,0,0.5);
+  box-shadow: 0px 7px 15px -1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   padding: 8px;
+  cursor: pointer;
 }
 
-.row-item .top-data{
+.row-item .top-data {
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
-  align-items:center
+  justify-content: space-between;
+  align-items: center;
 }
 
-.row-item .top-data strong{
+.row-item .top-data strong {
   color: gray;
 }
 
-.row-item .bottom-data small{
+.row-item .bottom-data small {
   color: gray;
 }
 
-.row-item .bottom-data{
+.row-item .bottom-data {
   display: flex;
   flex-direction: row;
+}
+
+.info-column{
+  display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.primary{
+  background: #5D91F8;
+}
+
+.danger{
+  background: #F85D5D;
+}
+
+.input{
+  width: 290px;
+  height: 30px;
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
+}
+
+.text-area {
+    width: 290px;
+    height: 100px;
+    display: block;
+    justify-content: center;
+    border: solid;
+    border-width: 0.5px;
+    border-color: #bfbfbf;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 0 10px;
+    outline-color: #5d91f8;
+}
+
+.select {
+    width: 290px;
+    height: 30px;
+    display: block;
+    justify-content: center;
+    border: solid;
+    border-width: 0.5px;
+    border-color: #bfbfbf;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 0 10px;
+    outline-color: #5d91f8;
+    color: grey;
 }
