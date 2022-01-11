@@ -76,6 +76,19 @@ class Llamados
     $res = $this->db->insert('llamados', $data);
     answer_json($res);
   }
+
+  function updateLlamados($data){
+    // answer_json($data);
+
+    $observacion = $data["observacion"];
+
+  $sql = "UPDATE llamados SET materia_id = '{$data['materia_id']}', persona_id = '{$data['persona_id']}', observacion = '$observacion', docente_id = '{$data['docente_id']}' where id = '{$data['id']}' ";
+      $stmt = $this->db->pdo->prepare($sql);
+      $this->db->pdo->beginTransaction();
+      $stmt->execute();
+      $res = $this->db->pdo->commit();
+    answer_json($res);
+}
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -93,5 +106,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $l = new Llamados();
-  $l->createLlamados($_POST);
+  
+  if($_POST['method'] == 'POST') {
+    unset($_POST['method']);
+    $l->createLlamados($_POST);
+  }
+  if($_POST['method'] == 'PUT'){
+    unset($_POST['method']);
+    $l->updateLlamados($_POST);
+  }
+
 }

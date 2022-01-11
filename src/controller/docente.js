@@ -104,7 +104,6 @@ class docente{
 
     const buttonAgregar = document.querySelector('#btnAgregar')
     buttonAgregar.onclick = (e) =>{
-      console.log(this.buttonToogle);
       if(this.buttonToogle == 0){
         this.showAgregarOptions()
       }else{
@@ -136,9 +135,28 @@ class docente{
     }
   }
 
-  mostrarLlamadosEstudiante(llamados){
+  async mostrarLlamadosEstudiante(llamados){
+    let req = await fetch('../model/reglas.php?')
+    const reglas = await req.json()
+
+    let reglasHtml = `<select name="regla_id">`
+    let optionsHtml = ''
+    reglas.forEach(regla =>{
+      optionsHtml += `<option value="${regla.id}">${regla.nombre}</option>`
+    })
+    reglasHtml += `${optionsHtml}</select>`
+
+    req = await fetch(`../model/materias_persona.php?persona_id=${userData.persona_id}`)
+    const materias = await req.json()
+
+    let materiasHtml = `<select name="materia_id">`
+    optionsHtml = ''
+    materias.forEach(materia =>{
+      optionsHtml += `<option value="${materia.materia_id}">${materia.materia}</option>`
+    })
+    materiasHtml += `${optionsHtml}</select>`
+
     this.addForm() 
-    console.log(llamados)
     const RowsColumn = document.querySelector('.rows-column')
     llamados.forEach(llamado => {
       RowsColumn.appendChild(this.mostrarRowItems(llamado))
@@ -148,18 +166,18 @@ class docente{
     rowsItem.forEach(row => {
       row.addEventListener('click', (e) => {
         const parent = e.target.classList.contains('row-item') ? e.target : e.target.parentElement.parentElement
+        const llamadoId = parent.querySelector('div[name=llamadoId]').textContent
         const reglaId = parent.querySelector('div[name=reglaId]').textContent
         const materiaId = parent.querySelector('div[name=materiaId]').textContent
         const estudiante = parent.querySelector('div[name=estudiante]').textContent
+        const estudianteId = parent.querySelector('div[name=estudiante_id]').textContent
         const observacion = parent.querySelector('div[name=observacion]').textContent
 
         this.mostrarLlamadoDetails({
-          reglaId, materiaId, estudiante, observacion
-        })
-
+          llamadoId, reglaId, materiaId, estudiante, estudianteId, observacion
+        }, reglasHtml, materiasHtml)
       })
     })
-
   }
 
   mostrarRowItems(data){
@@ -178,36 +196,40 @@ class docente{
             </small>
           </div>
           <div class="hidden-info">
-            <div name="reglaId" hidden>${data.regla_id}></div>
-            <div name="materiaId" hidden>${data.materia_id}></div>
-            <div name="materia" hidden>${data.materia}></div>
-            <div name="estudiante_id" hidden>${data.estudiante_id}></div>
-            <div name="estudiante" hidden>${data.estudiante}></div>
-            <div name="observacion" hidden>${data.observacion}></div>
+            <div name="llamadoId" hidden>${data.llamado_id}</div>
+            <div name="reglaId" hidden>${data.regla_id}</div>
+            <div name="materiaId" hidden>${data.materia_id}</div>
+            <div name="materia" hidden>${data.materia}</div>
+            <div name="estudiante_id" hidden>${data.estudiante_id}</div>
+            <div name="estudiante" hidden>${data.estudiante}</div>
+            <div name="observacion" hidden>${data.observacion}</div>
           </div>
     `
     container.innerHTML = html
     return container
   }
 
-  mostrarLlamadoDetails(data){
+  mostrarLlamadoDetails(data, reglas, materias){
     const infoColumn = document.querySelector('.info-column')
-    const html = `
-        <select name="regla">
-          <option value="${data.reglaId}">Regla</option>
-        </select>
-        <select name="materia">
-          <option value="${data.materiaId}">Materia</option>
-        </select>
-        <input type="text" value="${data.estudiante}" disabled >
+    const html = `<form>
+      ${reglas}
+        ${materias}
+       <input type="text" value="${data.estudiante}">
+       <input type="text" name="persona_id" value="${data.estudianteId}" hidden>
+        <input type="text" name="id" value="${data.llamadoId}" hidden>
         <textarea name="observacion" cols="30" rows="10">${data.observacion}</textarea>
-        
         <div class="actions">
-          <button>Guardar</button>
-          <button>Eliminar</button>
+          <button class="primary" name="guardar">Guardar</button>
+          <button class="danger" name="eliminar">Eliminar</button>
         </div>
-    `
+    </form`
     infoColumn.innerHTML = html
+
+    const guardarButton = document.querySelector('button[name="guardar"]')
+    guardarButton.addEventListener('click', (e) =>{
+      this.editarLlamado(e)
+    })
+
   }
 
   addForm(){
@@ -302,6 +324,21 @@ class docente{
     var modal = document.querySelector(".modal-extended");
     modal.remove();
     overlay.remove();
+  }
+
+  editarLlamado(e){
+    e.preventDefault()
+    const parent = e.target.parentElement.parentElement
+    const form = new FormData(parent)
+    form.append('method', 'PUT')
+    form.append('docente_id', userData.persona_id)
+    console.log(form.get('persona_id'))
+
+    fetch('../model/llamados.php', {
+      method: 'POST',
+      body: form
+    })
+
   }
 
 }
