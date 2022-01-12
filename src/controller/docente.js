@@ -220,7 +220,7 @@ class docente{
     const html = `<form>
       ${reglas}
         ${materias}
-       <input type="text" value="${data.estudiante}">
+       <input type="text" value="${data.estudiante}" disabled>
        <input type="text" name="persona_id" value="${data.estudianteId}" hidden>
         <input type="text" name="id" value="${data.llamadoId}" hidden>
         <textarea name="observacion" cols="30" rows="10">${data.observacion}</textarea>
@@ -238,6 +238,11 @@ class docente{
     const guardarButton = document.querySelector('button[name="guardar"]')
     guardarButton.addEventListener('click', (e) =>{
       this.editarLlamado(e, data, rowItem, itemTable)
+    })
+
+    const eliminarButton = document.querySelector('button[name="eliminar"]')
+    eliminarButton.addEventListener('click', (e) =>{
+      this.eliminarLlamado(e, data.llamadoId, rowItem, itemTable)
     })
 
   }
@@ -359,6 +364,26 @@ class docente{
       }
     })
 
+  }
+
+  eliminarLlamado(e, llamadoId, rowItem, itemTable) {
+    e.preventDefault()
+    const form = new FormData()
+    form.append('method', 'DELETE')
+    form.append('id', llamadoId)
+    fetch('../model/llamados.php', {
+      method: 'POST',
+      body: form
+    })
+    .then(res =>{
+      if(res){
+        notify({
+          type: "success",
+          message: "Eliminado correctamente"
+        })
+        this.removerLlamado(rowItem, itemTable)
+      }
+    })
   }
 
   removerLlamado(rowItem, itemTable){

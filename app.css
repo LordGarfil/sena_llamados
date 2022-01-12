@@ -128,21 +128,21 @@ select {
   flex-direction: row;
 }
 
-.info-column{
+.info-column form {
   display: flex;
-    flex-direction: column;
-    gap: 12px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.primary{
-  background: #5D91F8;
+.primary {
+  background: #5d91f8;
 }
 
-.danger{
-  background: #F85D5D;
+.danger {
+  background: #f85d5d;
 }
 
-.input{
+.input {
   width: 290px;
   height: 30px;
   display: block;
@@ -157,30 +157,30 @@ select {
 }
 
 .text-area {
-    width: 290px;
-    height: 100px;
-    display: block;
-    justify-content: center;
-    border: solid;
-    border-width: 0.5px;
-    border-color: #bfbfbf;
-    border-radius: 7px;
-    font-size: 15px;
-    padding: 0 10px;
-    outline-color: #5d91f8;
+  width: 290px;
+  height: 100px;
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
 }
 
 .select {
-    width: 290px;
-    height: 30px;
-    display: block;
-    justify-content: center;
-    border: solid;
-    border-width: 0.5px;
-    border-color: #bfbfbf;
-    border-radius: 7px;
-    font-size: 15px;
-    padding: 0 10px;
-    outline-color: #5d91f8;
-    color: grey;
+  width: 290px;
+  height: 30px;
+  display: block;
+  justify-content: center;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #bfbfbf;
+  border-radius: 7px;
+  font-size: 15px;
+  padding: 0 10px;
+  outline-color: #5d91f8;
+  color: grey;
 }
