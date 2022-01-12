@@ -1,11 +1,11 @@
 import Estudiantes from "./estudiantes.js"
+import notify from "../views/notify.js"
 import Reglas from "./reglas.js"
 import Llamados from "./llamados.js"
 class docente{
   buttonToogle = 0
 
   async init(){
-    console.log(userData)
     await this.cargarHeader()
     await this.cargarTablaLlamados()
     this.initialEvents()
@@ -119,26 +119,32 @@ class docente{
       tableItem.forEach(item => {
       item.addEventListener('click', (e) => {
         const target = e.target
-        let itemTarget = null
+        let itemTable = null
         if(target.classList.contains('table-item')){
-          itemTarget = target
+          itemTable = target
         }else{
-          itemTarget = target.parentNode
+          itemTable = target.parentNode
         }
-        const personaId = itemTarget.querySelector('div[name=personaId]').textContent
+        const personaId = itemTable.querySelector('div[name=personaId]').textContent
         this.getLlamadosEstudiante(personaId)
         .then(llamados => {
-           this.mostrarLlamadosEstudiante(llamados)
+           this.mostrarLlamadosEstudiante(llamados, itemTable)
         })
       })
     })
     }
   }
 
-  async mostrarLlamadosEstudiante(llamados){
+  async mostrarLlamadosEstudiante(llamados, itemTable){
+    this.addForm() 
+    const RowsColumn = document.querySelector('.rows-column')
+    llamados.forEach(llamado => {
+      RowsColumn.appendChild(this.mostrarRowItems(llamado))
+    })
+
+    const rowsItem = document.querySelectorAll('.row-item')
     let req = await fetch('../model/reglas.php?')
     const reglas = await req.json()
-
     let reglasHtml = `<select name="regla_id">`
     let optionsHtml = ''
     reglas.forEach(regla =>{
@@ -156,16 +162,16 @@ class docente{
     })
     materiasHtml += `${optionsHtml}</select>`
 
-    this.addForm() 
-    const RowsColumn = document.querySelector('.rows-column')
-    llamados.forEach(llamado => {
-      RowsColumn.appendChild(this.mostrarRowItems(llamado))
-    })
-
-    const rowsItem = document.querySelectorAll('.row-item')
     rowsItem.forEach(row => {
       row.addEventListener('click', (e) => {
-        const parent = e.target.classList.contains('row-item') ? e.target : e.target.parentElement.parentElement
+        let parent = null
+        if(e.target.classList.contains('row-item')){
+          parent = e.target
+        }else if(e.target.classList.contains('bottom-data')){
+          parent = e.target.parentElement
+        }else{
+          parent = e.target.parentElement.parentElement
+        }
         const llamadoId = parent.querySelector('div[name=llamadoId]').textContent
         const reglaId = parent.querySelector('div[name=reglaId]').textContent
         const materiaId = parent.querySelector('div[name=materiaId]').textContent
@@ -175,7 +181,7 @@ class docente{
 
         this.mostrarLlamadoDetails({
           llamadoId, reglaId, materiaId, estudiante, estudianteId, observacion
-        }, reglasHtml, materiasHtml)
+        }, reglasHtml, materiasHtml, parent, itemTable)
       })
     })
   }
@@ -209,7 +215,7 @@ class docente{
     return container
   }
 
-  mostrarLlamadoDetails(data, reglas, materias){
+  mostrarLlamadoDetails(data, reglas, materias, rowItem, itemTable){
     const infoColumn = document.querySelector('.info-column')
     const html = `<form>
       ${reglas}
@@ -225,9 +231,13 @@ class docente{
     </form`
     infoColumn.innerHTML = html
 
+    document.querySelector("select[name=materia_id]").value = data.materiaId
+    document.querySelector("select[name=regla_id]").value = data.reglaId
+
+
     const guardarButton = document.querySelector('button[name="guardar"]')
     guardarButton.addEventListener('click', (e) =>{
-      this.editarLlamado(e)
+      this.editarLlamado(e, data, rowItem, itemTable)
     })
 
   }
@@ -326,18 +336,53 @@ class docente{
     overlay.remove();
   }
 
-  editarLlamado(e){
+  editarLlamado(e, previousData, rowItem, itemTable){
     e.preventDefault()
     const parent = e.target.parentElement.parentElement
     const form = new FormData(parent)
     form.append('method', 'PUT')
     form.append('docente_id', userData.persona_id)
-    console.log(form.get('persona_id'))
 
     fetch('../model/llamados.php', {
       method: 'POST',
       body: form
     })
+    .then(res =>{
+      if(res){
+        notify({
+          type: "success",
+          message: "Actualizado correctamente"
+        })
+        if(previousData.materiaId != form.get('materia_id')){
+          this.removerLlamado(rowItem, itemTable)
+        }
+      }
+    })
+
+  }
+
+  removerLlamado(rowItem, itemTable){
+    const rowsColumn = document.querySelector('.rows-column')
+    const rowItems = document.querySelectorAll('.row-item')
+    const llamadoId = rowItem.querySelector('div[name=llamadoId]').textContent
+
+    // Se remueve el llamado de la fila
+    rowItems.forEach(item => {
+      const llamadoId_ = item.querySelector('div[name=llamadoId]').textContent
+      if(llamadoId_ == llamadoId){
+        rowsColumn.removeChild(item)
+      }
+    })
+
+    // Se resta el llamado del contador de llamados del estudiante
+    const oldValue = itemTable.querySelector('.badge').textContent
+    itemTable.querySelector('.badge').textContent = (oldValue - 1)
+
+    // Se remueve la informacion del llamado seleccionado
+    const infoColumn = document.querySelector('.info-column')
+    const form = infoColumn.querySelector('form')
+    infoColumn.removeChild(form)
+
 
   }
 
