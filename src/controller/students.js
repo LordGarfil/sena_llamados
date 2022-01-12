@@ -41,22 +41,28 @@ function fillTheTable(data) {
     const item = document.createElement("div");
     item.classList.add("table-item");
     const html = `
-    <input type="hidden" id="llamadoId" name="llamadoId" value="${d["llamado_id"]}">
-    <div class="llamado">
+    <input type="hidden" id="llamadoId" value="${d["llamado_id"]}">
+    <div class="llamado" name="item" >
       <h1>${d["regla"]}</h1>
     </div>
-    <div class="articulo">
+    <div class="articulo" name="item">
       <h1>${d["regla_id"]}</h1>
     </div>
-    <div class="docente">
+    <div class="docente" name="item">
       <h1>${d["docente"]}</h1>
     </div>
-    <div class="categoria" style="background-color:${d["color"]}" >
+    <div class="categoria" name="item" style="background-color:${d["color"]}" >
       ${d["categoria"]}
     </div>
   `;
     item.innerHTML = html;
     table.appendChild(item);
+  });
+
+  //Adding the event click
+  const item = document.getElementsByName("item");
+  item.forEach((element) => {
+    element.addEventListener("click", onItemClick);
   });
 }
 
@@ -98,6 +104,7 @@ function showModal() {
   studentModal.classList.add("active");
   overlay.classList.add("active");
 }
+
 function showCallModal() {
   var overlay = document.querySelector("#call-overlay");
   var studentModal = document.querySelector(".call-modal");
@@ -121,7 +128,10 @@ function hideCallModal() {
 
 function onTableItemClick(event) {
   const tableItem = event.target;
-  const llamado_id = tableItem.querySelector("#llamadoId").value;
+  const llamado_id =
+    tableItem.querySelector("#llamadoId") != null
+      ? tableItem.querySelector("#llamadoId").value
+      : -1;
   var found = data.find((element) => element["llamado_id"] == llamado_id);
   if (found) {
     var bodyCallModal = document.querySelector(".call-modal-body");
@@ -151,7 +161,44 @@ function onTableItemClick(event) {
     `;
     bodyCallModal.innerHTML = html;
     showCallModal();
-  } else {
-    alert("There's was an error bro");
+  }
+}
+
+function onItemClick(event) {
+  event.preventDefault();
+  const item = event.target.parentElement.parentElement;
+  const llamado_id =
+    item.querySelector("#llamadoId") != null
+      ? item.querySelector("#llamadoId").value
+      : -1;
+  var found = data.find((element) => element["llamado_id"] == llamado_id);
+  if (found) {
+    var bodyCallModal = document.querySelector(".call-modal-body");
+    var header = document.querySelector(".call-modal-header");
+    header.innerHTML = `
+      <div class="date">${found["fecha"]}</div>
+      <div class="title">Llamado de atención</div>
+      <button onclick="hideCallModal()" class="close-button">&times;</button>
+    `;
+    var html = `
+      <div class="input-data">
+        <div class="item-key">Titulo:</div>
+        <div class="item-value">${found["regla"]}</div>
+      </div>
+      <div class="input-data">
+        <div class="item-key">Regla:</div>
+        <div class="item-value">${found["regla_id"]}</div>
+      </div>
+      <div class="input-data">
+        <div class="item-key">Docente:</div>
+        <div class="item-value">${found["materia"]} | ${found["docente"]}</div>
+      </div>
+      <div class="input-data">
+        <div class="item-key">Observaciones:</div>
+        <div class="item-value">${found["observaciones"]}</div>
+      </div>
+    `;
+    bodyCallModal.innerHTML = html;
+    showCallModal();
   }
 }
