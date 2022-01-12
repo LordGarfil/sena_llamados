@@ -44,12 +44,7 @@
       <div class="route">
         <h1>Estudiante > Llamados de atención</h1>
       </div>
-      <div class="table">
-       
-        <div class="table-content">
-
-        </div>
-      </div>
+      <div class="table"></div>
     </div>
 
   </div>

@@ -47,7 +47,7 @@ function fillTheTable(data) {
   `;
 
   const tableContent = document.createElement("div");
-  header.classList.add("table-content");
+  tableContent.classList.add("table-content");
 
   data.forEach((d) => {
     const item = document.createElement("div");
