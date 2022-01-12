@@ -37,6 +37,18 @@ function loadStudentData() {
 
 function fillTheTable(data) {
   var table = document.querySelector(".table");
+  const header = document.createElement("div");
+  header.classList.add("table-header");
+  header.innerHTML = `
+  <div class="item-column llamado">Llamado</div>
+  <div class="item-column articulo">Artículo</div>
+  <div class="item-column docente">Docente</div>
+  <div class="item-column categoria">Categoría</div>
+  `;
+
+  const tableContent = document.createElement("div");
+  header.classList.add("table-content");
+
   data.forEach((d) => {
     const item = document.createElement("div");
     item.classList.add("table-item");
@@ -56,8 +68,11 @@ function fillTheTable(data) {
     </div>
   `;
     item.innerHTML = html;
-    table.appendChild(item);
+    tableContent.appendChild(item);
   });
+
+  table.appendChild(header);
+  table.appendChild(tableContent);
 
   //Adding the event click
   const item = document.getElementsByName("item");
