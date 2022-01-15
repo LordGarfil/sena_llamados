@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <form id="main-form" class="app">
+  <form id="main-form" class="app" name="app-container">
     <h5>¡Bienvenido!</h5>
     <div class="login-form">
       <input class="textfield" type="text" placeholder="Usuario" name="user" autocomplete="false" autocapitalize="false">

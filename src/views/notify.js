@@ -4,6 +4,12 @@ const notify = ({ type, message }) => {
     message = "Transacción exitosa"
   }
 
+  // Escondemos el modal
+  const modal = document.querySelector("div[name=modal]")
+  if(modal){
+    modal.style.visibility = "hidden"
+  }
+
   const alert = document.createElement("div")
   alert.classList.add("alert-father")
   const html = `<div class="alert-container alert-${type}">
@@ -16,7 +22,7 @@ const notify = ({ type, message }) => {
       ${message}
     </div>
     <div class="">
-      <button class="close">Aceptar</button>
+      <button class="close" name="aceptar">Aceptar</button>
     </div>
   </div>
 </div>`
@@ -24,7 +30,7 @@ const notify = ({ type, message }) => {
   alert.innerHTML = html
   const body = document.querySelector("body")
   const appContainer = document.querySelector(".app")
-  appContainer.classList.add("overlay")
+  // appContainer.classList.add("overlay")
   body.appendChild(alert)
 
   initEvents()
@@ -34,12 +40,21 @@ function initEvents() {
   const botones = document.querySelectorAll(".close")
   botones.forEach((boton) => {
     boton.onclick = (e) => {
-      console.log(e)
       const appContainer = document.querySelector(".app")
       appContainer.classList.remove("overlay")
       const alertContainer = document.querySelector(".alert-father")
       const body = document.querySelector("body")
       body.removeChild(alertContainer)
+
+      const modal = document.querySelector("div[name=modal]")
+      const appCotainer_ = document.querySelector("form[name=app-container]")
+      if(modal){
+        modal.style.visibility = "visible"
+      }
+      if(appCotainer_){
+        const overlay = document.querySelector("#overlay")
+        appCotainer.removeChild(overlay)
+      }
     }
   })
 }

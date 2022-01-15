@@ -1,4 +1,5 @@
 import notify from "../views/notify.js";
+import docente from "./docente.js";
 import {Mail} from "./mail.js";
 class Llamados {
   loggedPerson = {};
@@ -26,6 +27,7 @@ class Llamados {
     const modal = document.createElement("div");
     modal.classList.add("regla-modal");
     modal.classList.add("active");
+    modal.setAttribute("name", "modal")
     modal.setAttribute("id", "regla-modal");
     modal.innerHTML += html;
 
@@ -193,6 +195,9 @@ class Llamados {
       const mensaje = "Se ha generado un llamado de atencion a su nombre: <br/>" + observacion
       const mail = new Mail(estudiante.correo, titulo, mensaje)
       mail.send()
+      const d = new docente()
+      const docenteId = d.docenteData.persona_id
+      d.cargarTablaLlamados(docenteId)
     }
   }
 

@@ -21,6 +21,7 @@ class Reglas {
     const modal = document.createElement("div");
     modal.classList.add("regla-modal");
     modal.classList.add("active");
+    modal.setAttribute("name", "modal")
     modal.setAttribute("id", "regla-modal");
     modal.innerHTML += html;
 

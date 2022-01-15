@@ -117,11 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $l = new Llamados();
 
-  if ($_POST['method'] == 'POST') {
-    unset($_POST['method']);
-    $l->createLlamados($_POST);
-  }
-  if ($_POST['method'] == 'PUT') {
+  if(isset($_POST['method'])){
+    if ($_POST['method'] == 'PUT') {
     unset($_POST['method']);
     $l->updateLlamados($_POST);
   }
@@ -129,4 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     unset($_POST['method']);
     $l->deletellamado($_POST['id']);
   }
+  }else{
+    $l->createLlamados($_POST);
+  }  
 }

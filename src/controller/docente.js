@@ -4,6 +4,7 @@ import Reglas from "./reglas.js"
 import Llamados from "./llamados.js"
 class docente{
   buttonToogle = 0
+  docenteData = userData
 
   async init(){
     await this.cargarHeader()
@@ -42,9 +43,10 @@ class docente{
     return res
   }
 
-  async getLlamadosDocente(){
+  async getLlamadosDocente(personaId = null){
     const materiaId = document.querySelector('#selectMaterias').value
-    const req = await fetch(`../model/llamados.php?filter=2&persona_id=${userData.persona_id}&materia_id=${materiaId}`)
+    const persona_id = userData.persona_id ? userData.persona_id : personaId
+    const req = await fetch(`../model/llamados.php?filter=2&persona_id=${persona_id}&materia_id=${materiaId}`)
     const res = await req.json()
     return res
   }
@@ -56,9 +58,9 @@ class docente{
     return res
   }
 
-  async cargarTablaLlamados(){
+  async cargarTablaLlamados(docenteId = null){
     const tabla = document.querySelector('.div-table')
-    const llamados = await this.getLlamadosDocente()
+    const llamados = await this.getLlamadosDocente(docenteId)
 
     let llamadosHtml = ""
 
@@ -249,7 +251,7 @@ class docente{
 
   addForm(){
     const html = `
-  <div class="modal-container">
+  <div class="modal-container" name="modal">
     <div class="modal-header">
       <div class="info-header"><span>Llamados de atención | Juan Restrepo</span></div>
       <div class="close-button">x</div>
@@ -415,3 +417,5 @@ class docente{
 
 const app = new docente()
 app.init()
+
+export default docente
