@@ -13,7 +13,8 @@ class Llamados
     $personaId = isset($data['persona_id']) ? $data['persona_id'] : null;
     $materiaId = isset($data['materia_id']) ? $data['materia_id'] : null;
 
-    $sql = "SELECT l.id llamado_id,
+    if($materiaId){
+      $sql = "SELECT l.id llamado_id,
        r.id regla_id,
        concat(r.articulo, ' - ', r.nombre) regla,
        m.id materia_id,
@@ -35,6 +36,32 @@ class Llamados
       WHERE l.persona_id = ? and l.materia_id = ?";
 
     $res = $this->db->fetch($sql, [$personaId, $materiaId]);
+    }else{
+      $sql = "SELECT l.id llamado_id,
+       r.id regla_id,
+       concat(r.articulo, ' - ', r.nombre) regla,
+       m.id materia_id,
+       m.nombre materia,
+       concat(d.nombre, ' ', d.apellido) docente,
+       p.id estudiante_id,
+       concat(p.nombre, ' ', p.apellido) estudiante,
+       l.observacion observaciones,
+       c.id categoria_id,
+       c.nombre categoria,
+       c.color,
+       l.fecha_creacion fecha
+      FROM llamados l
+      INNER JOIN personas p ON l.persona_id = p.id
+      INNER JOIN personas d ON l.docente_id = d.id
+      INNER JOIN reglas r ON l.regla_id = r.id
+      INNER JOIN materias m ON l.materia_id = m.id
+      INNER JOIN categorias c ON r.categoria_id = c.id
+      WHERE l.persona_id = ?";
+
+    $res = $this->db->fetch($sql, [$personaId]);
+    }
+
+    
     answer_json($res);
   }
 
@@ -51,7 +78,8 @@ class Llamados
        count(*) llamados
       FROM llamados l
       INNER JOIN personas p ON l.persona_id = p.id
-      WHERE l.docente_id = ?";
+      WHERE l.docente_id = ?
+      GROUP BY p.id";
 
         $res = $this->db->fetch($sql, [$personaId]);
       } else {
@@ -62,7 +90,8 @@ class Llamados
         FROM llamados l
         INNER JOIN personas p ON l.persona_id = p.id
         WHERE l.docente_id = ?
-      and l.materia_id = ?";
+      and l.materia_id = ?
+      GROUP BY p.id";
 
         $res = $this->db->fetch($sql, [$personaId, $materiaId]);
       }

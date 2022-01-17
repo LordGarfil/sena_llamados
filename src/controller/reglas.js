@@ -78,7 +78,7 @@ class Reglas {
   async onSubmit(event) {
     event.preventDefault();
     var article = document.getElementsByName("articulo")[0].value;
-    var title = document.getElementsByName("nombre")[0].value;
+    var title = document.querySelector("div[name=modal] input[name=nombre]").value;
     var category = document.getElementsByName("categoria_id")[0].value;
     var description = document.getElementsByName("descripcion")[0].value;
     if (

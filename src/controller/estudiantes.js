@@ -79,9 +79,9 @@ class Estudiantes {
   async onSubmit(event) {
     event.preventDefault();
     var id = document.getElementsByName("id")[0].value;
-    var nombre = document.getElementsByName("nombre")[0].value;
+    var nombre = document.querySelector("div[name=modal] input[name=nombre]").value;
     var apellido = document.getElementsByName("apellido")[0].value;
-    var correo = document.getElementsByName("correo")[0].value;
+    var correo = document.querySelector("div[name=modal] input[name=correo]").value;
     var ficha_id = document.getElementsByName("ficha")[0].value;
     if (
       id.trim() === "" ||

@@ -24,7 +24,7 @@ class Estudiante
       "contrasena" => "123",
       "rol_id" => 1
     ];
-    $this->db->insert('usuarios', $usuario);
+    $userRes = $this->db->insert('usuarios', $usuario);
 
     //Se asocia a la persona con la ficha
     $persona_ficha = [
@@ -33,7 +33,23 @@ class Estudiante
     ];
     $this->db->insert('personas_fichas', $persona_ficha);
 
-    // answer_json($res);
+    $sql = "select m.id
+      from materias m
+      inner join fichas_materias fm on m.id = fm.materia_id
+      where fm.ficha_id = ?";
+
+      $materias_ficha = $this->db->fetch($sql, [$data['ficha']]);
+      if($materias_ficha){
+        foreach($materias_ficha as $materia){
+          $datos = [
+            "persona_id" => $data['id'],
+            "materia_id" => $materia['id']
+          ];
+          $this->db->insert("personas_materias", $datos);
+        }
+      }
+
+    answer_json($userRes);
   }
 }
 
