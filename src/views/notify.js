@@ -47,13 +47,13 @@ function initEvents() {
       body.removeChild(alertContainer)
 
       const modal = document.querySelector("div[name=modal]")
-      const appCotainer_ = document.querySelector("form[name=app-container]")
+      const appContainer_ = document.querySelector("form[name=app-container]")
       if(modal){
         modal.style.visibility = "visible"
       }
-      if(appCotainer_){
+      if(appContainer_){
         const overlay = document.querySelector("#overlay")
-        appCotainer.removeChild(overlay)
+        appContainer.removeChild(overlay)
       }
     }
   })
