@@ -71,7 +71,7 @@
     const person_information = <?php echo (json_encode($_SESSION));  ?>
   </script>
 </body>
-<script src="../controller/students.js"></script>
+<script src="../controller/students.js" type="module"></script>
 <script src="../controller/app.js"></script>
 
 </html>

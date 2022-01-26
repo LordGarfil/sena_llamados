@@ -1,10 +1,12 @@
+import Empty from "./empty.js"
+
 var data = [];
 
 window.onload = async function () {
   const url = `http://localhost/sena_llamados/src/model/llamados.php?filter=${person_information["rol_id"]}&persona_id=${person_information["persona_id"]}`;
   const response = await fetch(url);
   const loadData = await response.json();
-  if (loadData != null || loadData.length > 0) {
+  if (typeof(loadData) != 'object' && !'error' in loadData) {
     data = loadData;
     loadStudentData();
     fillTheTable(loadData);
@@ -13,6 +15,13 @@ window.onload = async function () {
     tableItem.forEach((element) => {
       element.addEventListener("click", onTableItemClick);
     });
+  }else{
+    loadStudentData();
+    stopLoading()
+    const body = document.querySelector(".body-content")
+    const emptyObj = new Empty()
+    const empty = emptyObj.render('Espera a que un docente te agregue un llamado.')
+    body.innerHTML = empty
   }
 };
 
@@ -49,7 +58,7 @@ function fillTheTable(data) {
   const tableContent = document.createElement("div");
   tableContent.classList.add("table-content");
 
-  data.forEach((d) => {
+    data.forEach((d) => {
     const item = document.createElement("div");
     item.classList.add("table-item");
     const html = `

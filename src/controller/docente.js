@@ -2,6 +2,7 @@ import Estudiantes from "./estudiantes.js"
 import notify from "../views/notify.js"
 import Reglas from "./reglas.js"
 import Llamados from "./llamados.js"
+import Empty from "./empty.js"
 class docente{
   buttonToogle = 0
   docenteData = userData
@@ -70,7 +71,7 @@ class docente{
 
       if(!llamadosNotZero){
         tabla.innerHTML = `
-          <div class="table-header">
+          <div class="table-header-docente">
           <div class="item-column">Identificación</div>
           <div class="item-column">Estudiante</div>
           <div class="item-column">Correo</div>
@@ -79,7 +80,7 @@ class docente{
         `
         llamados.forEach(llamado => {
         llamadosHtml += `
-          <div class="table-item">
+          <div class="table-item-docente">
           <div class="item-column" name="personaId">${llamado.estudiante_id}</div>
           <div class="item-column" name="nombre">${llamado.estudiante}</div>
           <div class="item-column" name="correo">${llamado.correo}</div>
@@ -94,7 +95,9 @@ class docente{
       }
       
     }else{
-      tabla.innerHTML = "No se encontraron llamados"
+    const emptyObj = new Empty()
+    const empty = emptyObj.render('Agrega un nuevo llamado.')
+    tabla.innerHTML = empty
     }
   }
 
@@ -116,13 +119,13 @@ class docente{
   }
 
   async listenToTableItems() {
-    const tableItem = document.querySelectorAll('.table-item')
+    const tableItem = document.querySelectorAll('.table-item-docente')
     if(tableItem){
       tableItem.forEach(item => {
       item.addEventListener('click', (e) => {
         const target = e.target
         let itemTable = null
-        if(target.classList.contains('table-item')){
+        if(target.classList.contains('table-item-docente')){
           itemTable = target
         }else{
           itemTable = target.parentNode
@@ -147,7 +150,7 @@ class docente{
     const rowsItem = document.querySelectorAll('.row-item')
     let req = await fetch('../model/reglas.php?')
     const reglas = await req.json()
-    let reglasHtml = `<select name="regla_id">`
+    let reglasHtml = `<select name="regla_id" class="category">`
     let optionsHtml = ''
     reglas.forEach(regla =>{
       optionsHtml += `<option value="${regla.id}">${regla.nombre}</option>`
@@ -157,7 +160,7 @@ class docente{
     req = await fetch(`../model/materias_persona.php?persona_id=${userData.persona_id}`)
     const materias = await req.json()
 
-    let materiasHtml = `<select name="materia_id">`
+    let materiasHtml = `<select name="materia_id" class="category">`
     optionsHtml = ''
     materias.forEach(materia =>{
       optionsHtml += `<option value="${materia.materia_id}">${materia.materia}</option>`
@@ -222,10 +225,10 @@ class docente{
     const html = `<form>
       ${reglas}
         ${materias}
-       <input type="text" value="${data.estudiante}" disabled>
-       <input type="text" name="persona_id" value="${data.estudianteId}" hidden>
-        <input type="text" name="id" value="${data.llamadoId}" hidden>
-        <textarea name="observacion" cols="30" rows="10">${data.observacion}</textarea>
+       <input type="text" class="field" value="${data.estudiante}" disabled>
+       <input type="text" class="field" name="persona_id" value="${data.estudianteId}" hidden>
+        <input type="text" class="field" name="id" value="${data.llamadoId}" hidden>
+        <textarea class="text_area" name="observacion" cols="30" rows="10">${data.observacion}</textarea>
         <div class="actions">
           <button class="primary" name="guardar">Guardar</button>
           <button class="danger" name="eliminar">Eliminar</button>
@@ -251,7 +254,7 @@ class docente{
 
   addForm(){
     const html = `
-  <div class="modal-container" name="modal">
+  <div class="modal-container">
     <div class="modal-header">
       <div class="info-header"><span>Llamados de atención | Juan Restrepo</span></div>
       <div class="close-button">x</div>
@@ -272,6 +275,7 @@ class docente{
     modal.classList.add("modal-extended");
     modal.classList.add("active");
     modal.setAttribute("id", "llamados-modal");
+    modal.setAttribute("name", "modal");
     modal.innerHTML += html;
 
     //Creamos el overlay
